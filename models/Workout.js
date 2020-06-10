@@ -37,10 +37,16 @@ const workoutSchema = new Schema({
         }
     
     ], 
-    totalDuration : Number
+    totalDuration : {type: Number, default: 0} 
 })
 
-
+workoutSchema.methods.setTotalDuration = function(){
+    let sum = 0
+    this.exercises.forEach(exercise => {
+        sum += exercise.duration
+    });
+    this.totalDuration = sum
+}
   
 
 const Workout = mongoose.model('Workout', workoutSchema)

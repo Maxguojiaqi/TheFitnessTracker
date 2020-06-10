@@ -7,7 +7,7 @@ router.get("/api/workouts", (req, res) => {
 
   db.Workout.find({})
       .sort({ date: -1 })
-      .populate('exercises')
+      // .populate('exercises')
       .exec((error, dbWorkout)=>{
         if (error) {
           res.status(404).json(error)
@@ -21,7 +21,7 @@ router.get("/api/workouts/range", (req, res) => {
 
   db.Workout.find({})
       .sort({ date: -1 })
-      .populate('exercises')
+      // .populate('exercises')
       .exec((error, dbWorkout)=>{
         if (error) {
           res.status(404).json(error)
@@ -36,14 +36,20 @@ router.get("/api/workouts/range", (req, res) => {
     console.log(workoutId)
     console.log(typeof(workoutId))
     console.log(req.body)
-    let newExercise = await db.Exercise.create(req.body)
+    // let newExercise = await db.Exercise.create(req.body)
     
     try {
-      updateResult = await db.Workout.updateOne(
+      let updateResult = await db.Workout.updateOne(
         { _id: ObjectId(workoutId) }, 
-        { $push: { exercises: newExercise }}
+        { $push: { exercises: req.body }}
       )
       console.log(updateResult)
+
+      let workoutObj = await db.Workout.findById(ObjectId(workoutId))
+      await workoutObj.setTotalDuration()
+      await workoutObj.save()
+      console.log(workoutObj)
+      
       res.status(201).json('success')
     } catch (error) {
       console.log(error)
