@@ -42,7 +42,7 @@ Adding Exercise
 View Workouts
 ![appDemo3](./Demos/demo3.JPG)
 
-Demo Link : https://afternoon-chamber-65403.herokuapp.com/
+Demo Link : https://floating-plains-43446.herokuapp.com/
 
 ## Contributing
 

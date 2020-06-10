@@ -144,6 +144,7 @@ db.Workout.deleteMany({})
     console.log(data.result.n + " records inserted!");
   })
   .then(()=>{
+    // after instert into db, use custom method to populate all the total duration
     db.Workout.find({}, function(err, arr){
          arr.forEach( async workoutDoc => {
          await workoutDoc.setTotalDuration()
